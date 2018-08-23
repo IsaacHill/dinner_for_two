@@ -5,14 +5,18 @@
   "main": "src/index.js",
   "scripts": {
     "client": "cd ../client && npm start",
-    "server": "nodemon src/server.js",
+    "server": "node src/server.js",
+    "dev-server": "nodemon src/server.js",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "dev-start": "concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^3.6.1",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3",
+    "yarn": "^1.9.4"
   }
 }
