@@ -24,7 +24,7 @@ pep8==1.7.1
 pluggy==0.6.0
 py==1.5.3
 pytest==3.6.2
-PyYAML==4.1
+PyYAML==3.13
 records==0.5.2
 requests==2.19.1
 six==1.11.0
