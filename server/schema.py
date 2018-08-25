@@ -30,7 +30,7 @@ class Ingredient(SQLAlchemyObjectType):
         model = IngredientModel
         interfaces = (relay.Node, )
 
-class IngredientConnections(relay.Connection);
+class IngredientConnections(relay.Connection):
     class Meta:
         node = Ingredient
 

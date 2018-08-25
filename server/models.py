@@ -52,10 +52,10 @@ class Recipe(Base):
     serves = Column(Integer)
 
 class Ingredient(Base):
-    __tablename__ - "recipe"
+    __tablename__ = "ingredient"
     id = Column(Integer, primary_key=True)
     name = Column(String, index=True)
-    quantity = Column(Integer)
+    quantity = Column(Float)
     recipie_id = Column(Integer, ForeignKey('recipe.id'))
     unit = Column(String)
     
