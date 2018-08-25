@@ -9,21 +9,40 @@ visit http://0.0.0.0:5000/graphql
 
 enter the following in the graphql query view to see an example of the data
 {
-  allMenus{
+  allUsers{
     edges {
       node{
         name
         id
-        recipes{
+        email
+        menus {
           edges{
-            node{
-              name
-              menuId
-              id
-            }
+            node
+          		{
+                name
+                recipes{
+                  edges{
+                    node{
+                      name
+                      id
+                      serves
+                      ingredients{
+                        edges {
+                          node{
+                            name
+                            quantity
+                            unit
+                          }
+                        }
+                      }
+                    }
+                }
+              }
           }
         }
       }
     }
-	}
+  }
 }
+}
+
