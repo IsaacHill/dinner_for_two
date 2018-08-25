@@ -1,7 +1,7 @@
 import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from models import db_session, Menu as MenuModel, Recipe as RecipeModel
+from models import db_session, Menu as MenuModel, Recipe as RecipeModel, User as UserModel, Ingredient as IngredientModel
 # User as UserModel
 
 class Menu(SQLAlchemyObjectType):
@@ -25,16 +25,24 @@ class RecipeConnections(relay.Connection):
     class Meta:
         node = Recipe
 
+class Ingredient(SQLAlchemyObjectType):
+    class Meta:
+        model = IngredientModel
+        interfaces = (relay.Node, )
 
-# class User(SQLAlchemyObjectType):
-#     class Meta:
-#         model = UserModel
-#         interfaces = (relay.Node, )
+class IngredientConnections(relay.Connection);
+    class Meta:
+        node = Ingredient
+
+class User(SQLAlchemyObjectType):
+    class Meta:
+        model = UserModel
+        interfaces = (relay.Node, )
 
 
-# class UserConnection(relay.Connection):
-#     class Meta:
-#         node = User
+class UserConnections(relay.Connection):
+    class Meta:
+        node = User
 
 class Query(graphene.ObjectType):
     node = relay.Node.Field()
@@ -42,6 +50,8 @@ class Query(graphene.ObjectType):
     # all_users = SQLAlchemyConnectionField(UserConnection)
     # Disable sorting over this field
     all_menus = SQLAlchemyConnectionField(MenuConnections, sort=None)
-    all_recipe = SQLAlchemyConnectionField(RecipeConnections, sort=None)
+    all_recipes = SQLAlchemyConnectionField(RecipeConnections, sort=None)
+    all_users = SQLAlchemyConnectionField(UserConnections, sort=None)
+
 
 schema = graphene.Schema(query=Query)

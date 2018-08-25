@@ -13,20 +13,20 @@ Base = declarative_base()
 # We will need this for querying
 Base.query = db_session.query_property()
 
-# association_table = Table('association', Base.metadata,
-#     Column('left_id', Integer, ForeignKey('left.id')),
-#     Column('right_id', Integer, ForeignKey('right.id'))
-# )
+association_table = Table('association', Base.metadata,
+    Column('user_id', Integer, ForeignKey('user.id')),
+    Column('menu_id', Integer, ForeignKey('menu.id'))
+)
 
-# class User(Base):
-#     __tablename__ = 'left'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String)
-#     email = Column(String(50), unique = True, nullable= False)
-#     menus = relationship(
-#         "Menu",
-#         secondary=association_table,
-#         back_populates="users")
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String(50), unique = True, nullable= False)
+    menus = relationship(
+        "Menu",
+        secondary=association_table,
+        back_populates="users")
 
 
 
@@ -35,6 +35,10 @@ class Menu(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     recipes = relationship("Recipe")
+    users = relationship(
+        "User",
+        secondary=association_table,
+        back_populates="menus")
 
 
 class Recipe(Base):
@@ -43,3 +47,15 @@ class Recipe(Base):
     name = Column(String)
     created_on = Column(DateTime, default=func.now())
     menu_id = Column(Integer, ForeignKey('menu.id'))
+    method = Column(Text)
+    ingredients = relationship("Ingredient")
+    serves = Column(Integer)
+
+class Ingredient(Base):
+    __tablename__ - "recipe"
+    id = Column(Integer, primary_key=True)
+    name = Column(String, index=True)
+    quantity = Column(Integer)
+    recipie_id = Column(Integer, ForeignKey('recipe.id'))
+    unit = Column(String)
+    
