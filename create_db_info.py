@@ -1,4 +1,9 @@
-from models import engine, db_session, Base, Recipe, Menu, User, Ingredient
+from data.ingredient.ingredient_model import Ingredient
+from data.recipe.recipe_model import Recipe
+from data.menu.menu_model import Menu
+from data.user.user_model import User
+from data.base import Base, db_session, engine
+
 Base.metadata.create_all(bind=engine)
 
 billy = User(name = "billy bob", email="test@mail.com")
