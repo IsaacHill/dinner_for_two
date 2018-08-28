@@ -1,4 +1,4 @@
-# flask_sqlalchemy/models.py
+"""Models for graphql response"""
 from sqlalchemy import *
 from sqlalchemy.orm import (scoped_session, sessionmaker, relationship,
                             backref)
@@ -18,6 +18,7 @@ association_table = Table('association', Base.metadata,
     Column('menu_id', Integer, ForeignKey('menu.id'))
 )
 
+
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
@@ -27,7 +28,6 @@ class User(Base):
         "Menu",
         secondary=association_table,
         back_populates="users")
-
 
 
 class Menu(Base):
@@ -51,6 +51,7 @@ class Recipe(Base):
     ingredients = relationship("Ingredient")
     serves = Column(Integer)
 
+
 class Ingredient(Base):
     __tablename__ = "ingredient"
     id = Column(Integer, primary_key=True)
@@ -58,4 +59,3 @@ class Ingredient(Base):
     quantity = Column(Float)
     recipie_id = Column(Integer, ForeignKey('recipe.id'))
     unit = Column(String)
-    

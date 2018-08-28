@@ -1,8 +1,10 @@
+"""Module for graphql schema"""
+
 import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from models import db_session, Menu as MenuModel, Recipe as RecipeModel, User as UserModel, Ingredient as IngredientModel
-# User as UserModel
+from models import Menu as MenuModel, Recipe as RecipeModel, User as UserModel, Ingredient as IngredientModel
+
 
 class Menu(SQLAlchemyObjectType):
     class Meta:
@@ -25,14 +27,17 @@ class RecipeConnections(relay.Connection):
     class Meta:
         node = Recipe
 
+
 class Ingredient(SQLAlchemyObjectType):
     class Meta:
         model = IngredientModel
         interfaces = (relay.Node, )
 
+
 class IngredientConnections(relay.Connection):
     class Meta:
         node = Ingredient
+
 
 class User(SQLAlchemyObjectType):
     class Meta:
@@ -43,6 +48,7 @@ class User(SQLAlchemyObjectType):
 class UserConnections(relay.Connection):
     class Meta:
         node = User
+
 
 class Query(graphene.ObjectType):
     node = relay.Node.Field()

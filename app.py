@@ -1,4 +1,5 @@
-# flask_sqlalchemy/app.py
+""" Main module for server"""
+
 from flask import Flask
 from flask_graphql import GraphQLView
 
@@ -13,13 +14,15 @@ app.add_url_rule(
     view_func=GraphQLView.as_view(
         'graphql',
         schema=schema,
-        graphiql=True # for having the GraphiQL interface
+        graphiql=True  # for having the GraphQL interface
     )
 )
+
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
+
 
 if __name__ == '__main__':
     app.run()
