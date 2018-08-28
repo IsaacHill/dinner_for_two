@@ -1,0 +1,125 @@
+schema {
+  query: Query
+}
+
+scalar DateTime
+
+type Ingredient implements Node {
+  id: ID!
+  name: String
+  quantity: Float
+  recipeId: Int
+  unit: String
+}
+
+type IngredientConnection {
+  pageInfo: PageInfo!
+  edges: [IngredientEdge]!
+}
+
+type IngredientEdge {
+  node: Ingredient
+  cursor: String!
+}
+
+type Menu implements Node {
+  id: ID!
+  name: String
+  recipes(before: String, after: String, first: Int, last: Int): RecipeConnection
+  users(before: String, after: String, first: Int, last: Int): UserConnection
+}
+
+type MenuConnection {
+  pageInfo: PageInfo!
+  edges: [MenuEdge]!
+}
+
+type MenuConnectionsConnection {
+  pageInfo: PageInfo!
+  edges: [MenuConnectionsEdge]!
+}
+
+type MenuConnectionsEdge {
+  node: Menu
+  cursor: String!
+}
+
+type MenuEdge {
+  node: Menu
+  cursor: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  node(id: ID!): Node
+  allMenus(before: String, after: String, first: Int, last: Int): MenuConnectionsConnection
+  allRecipes(before: String, after: String, first: Int, last: Int): RecipeConnectionsConnection
+  allUsers(before: String, after: String, first: Int, last: Int): UserConnectionsConnection
+}
+
+type Recipe implements Node {
+  id: ID!
+  name: String
+  createdOn: DateTime
+  menuId: Int
+  method: String
+  serves: Int
+  ingredients(before: String, after: String, first: Int, last: Int): IngredientConnection
+}
+
+type RecipeConnection {
+  pageInfo: PageInfo!
+  edges: [RecipeEdge]!
+}
+
+type RecipeConnectionsConnection {
+  pageInfo: PageInfo!
+  edges: [RecipeConnectionsEdge]!
+}
+
+type RecipeConnectionsEdge {
+  node: Recipe
+  cursor: String!
+}
+
+type RecipeEdge {
+  node: Recipe
+  cursor: String!
+}
+
+type User implements Node {
+  id: ID!
+  name: String
+  email: String!
+  menus(before: String, after: String, first: Int, last: Int): MenuConnection
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+}
+
+type UserConnectionsConnection {
+  pageInfo: PageInfo!
+  edges: [UserConnectionsEdge]!
+}
+
+type UserConnectionsEdge {
+  node: User
+  cursor: String!
+}
+
+type UserEdge {
+  node: User
+  cursor: String!
+}
