@@ -1,3 +1,6 @@
+
+import os
+os.environ['DATABASE_URL'] = 'sqlite:///database.sqlite3'
 from data.ingredient.ingredient_model import Ingredient
 from data.recipe.recipe_model import Recipe
 from data.menu.menu_model import Menu

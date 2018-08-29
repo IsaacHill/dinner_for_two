@@ -16,6 +16,7 @@ graphene-sqlalchemy==2.1.0
 graphql-core==2.1
 graphql-relay==0.4.5
 graphql-server-core==1.1.1
+gunicorn==19.9.0
 idna==2.7
 isort==4.3.4
 itsdangerous==0.24
@@ -32,6 +33,7 @@ pluggy==0.6.0
 promise==2.1
 py==1.5.3
 pytest==3.6.2
+python-dotenv==0.9.1
 PyYAML==3.13
 records==0.5.2
 requests==2.19.1

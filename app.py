@@ -7,7 +7,7 @@ from data.base import db_session
 from schema import schema
 
 app = Flask(__name__)
-app.debug = True
+# app.debug = True
 
 app.add_url_rule(
     '/graphql',
