@@ -6,7 +6,7 @@ from graphene_sqlalchemy import SQLAlchemyConnectionField
 from data.user.user_schema import UserConnections, User
 from data.menu.menu_schema import MenuConnections
 from data.user.user_schema import UserConnections, User
-from data.user.user_mutation import CreateUser
+from data.user.user_mutation import CreateUser, RemoveUser
 from data.recipe.recipe_schema import RecipeConnections
 # import required to know about ingredients field - don't think i like this
 from data.ingredient.ingredient_schema import IngredientConnections
@@ -37,6 +37,7 @@ class Query(graphene.ObjectType):
 
 class Mutations(graphene.ObjectType):
     create_user = CreateUser.Field()
+    remove_user = RemoveUser.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
