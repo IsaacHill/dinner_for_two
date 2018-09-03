@@ -44,7 +44,7 @@ class RemoveUser(graphene.Mutation):
     ok = graphene.Boolean()
     description = graphene.String()
 
-    def mutate(cls, info, **args):
+    def mutate(self, info, **args):
         name = args.pop('name')
         email = args.pop('email')
         user = UserModel.query.filter_by(name=name, email=email).first()
@@ -58,4 +58,37 @@ class RemoveUser(graphene.Mutation):
             ok = False
             description = 'Unable to find user in db'
         return RemoveUser(ok=ok, description=description)
+
+
+class UserLogin(graphene.Mutation):
+    """Main user login that returns jwt if user has correctly logged in"""
+    class Arguments:
+        email = graphene.String()
+        password = graphene.String()
+
+    ok = graphene.Boolean()
+    token = graphene.String()
+    error = graphene.String()
+
+    def mutate(self, info, **args):
+        email = args.pop('email')
+        password = args.pop('password')
+
+        # retrieve user from db
+        user = UserModel.query.filter_by(email=email).first()
+
+        # setup variables
+        error = ''
+        token = ''
+        ok = False
+        if user is not None:
+            if user.check_password(password):
+                ok = True
+                # TODO setup jwt here
+            else:
+                error = 'User credentials do not match.'
+        else:
+            error = 'User not found.'
+
+        return UserLogin(ok=ok, token=token, error=error)
 
