@@ -4,6 +4,7 @@ import graphene
 from .user_schema import User
 from .user_model import User as UserModel
 from data.base import db_session
+from sqlalchemy import exc
 
 
 class CreateUser(graphene.Mutation):
@@ -11,18 +12,27 @@ class CreateUser(graphene.Mutation):
     class Arguments:
         name = graphene.String()
         email = graphene.String()
+        password = graphene.String()
 
     user = graphene.Field(lambda: User)
     ok = graphene.Boolean()
+    error = graphene.String()
 
     def mutate(cls, info, **args):
         name = args.pop('name')
         email = args.pop('email')
-        user = UserModel(name=name, email=email)
-        db_session.add(user)
-        db_session.commit()
-        ok = True
-        return CreateUser(user=user, ok=ok)
+        password = args.pop('password')
+        try:
+            # create the new user
+            user = UserModel(name=name, email=email, password=password)
+            db_session.add(user)
+            db_session.commit()
+            ok = True
+            error = ''
+        except exc.IntegrityError:
+            ok = False
+            error = 'User with that email already exists.'
+        return CreateUser(user=user, ok=ok, error=error)
 
 
 class RemoveUser(graphene.Mutation):
