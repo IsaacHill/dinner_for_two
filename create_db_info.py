@@ -9,8 +9,8 @@ from data.base import Base, db_session, engine
 
 Base.metadata.create_all(bind=engine)
 
-billy = User(name = "billy bob", email="test@mail.com")
-mandy = User(name = "mandy bob", email="gog@mail.com")
+billy = User(name = "billy bob", email="test@mail.com", password='123')
+mandy = User(name = "mandy bob", email="gog@mail.com", password='321')
 
 
 beef_cheek = Ingredient(name = "Beef Cheek", quantity=2.0, unit="KG")
