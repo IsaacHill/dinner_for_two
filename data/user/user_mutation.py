@@ -5,6 +5,7 @@ from .user_schema import User
 from .user_model import User as UserModel
 from data.base import db_session
 from sqlalchemy import exc
+import datetime
 
 
 class CreateUser(graphene.Mutation):
@@ -28,6 +29,9 @@ class CreateUser(graphene.Mutation):
         try:
             # create the new user
             user = UserModel(name=name, email=email, password=password)
+            user.created = datetime.datetime.now()
+            user.admin = False
+            user.last_login = datetime.datetime.now()
             db_session.add(user)
             db_session.commit()
             ok = True
