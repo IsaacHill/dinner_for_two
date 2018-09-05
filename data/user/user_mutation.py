@@ -18,7 +18,6 @@ class CreateUser(graphene.Mutation):
     ok = graphene.Boolean()
     error = graphene.String()
 
-    @jwt_required
     def mutate(cls, info, **args):
         name = args.pop('name')
         email = args.pop('email')

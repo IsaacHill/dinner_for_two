@@ -6,6 +6,7 @@ from graphene_sqlalchemy import SQLAlchemyConnectionField
 from data.menu.menu_schema import MenuConnections
 from data.user.user_schema import UserConnections, User
 from data.user.user_mutation import CreateUser, RemoveUser, UserLogin, UserInformation
+from data.menu.menu_mutation import AddMenu
 from data.recipe.recipe_schema import RecipeConnections
 # import required to know about ingredients field - don't think i like this
 from data.ingredient.ingredient_schema import IngredientConnections
@@ -21,9 +22,6 @@ class MyConnectionField(SQLAlchemyConnectionField):
                 query = query.filter(getattr(model, field) == value)
         return query
 
-# class Query(graphene.ObjectType):
-#     node = graphene.relay.Node.Field()
-#     all_somethings = MyConnectionField(SomethingNode) 
 class Query(graphene.ObjectType):
     node = relay.Node.Field()
     # Allows sorting over multiple columns, by default over the primary key
@@ -37,6 +35,7 @@ class Mutations(graphene.ObjectType):
     remove_user = RemoveUser.Field()
     user_login = UserLogin.Field()
     user_information = UserInformation.Field()
+    add_menu = AddMenu.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)

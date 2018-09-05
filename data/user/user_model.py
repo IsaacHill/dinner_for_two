@@ -27,8 +27,13 @@ class User(Base):
 
     @classmethod
     def find_user(cls, email):
-        """Returns users with the matched email"""
+        """Returns user with the matched email"""
         return cls.query.filter_by(email=email).first()
+
+    @classmethod
+    def user_by_id(cls, user_id):
+        """Returns user with the matched id"""
+        return cls.query.filter_by(id=user_id).first()
 
     def set_password(self, password):
         """Sets user password with a hash"""
