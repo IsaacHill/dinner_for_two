@@ -15,5 +15,5 @@ Base = declarative_base()
 # We will need this for querying
 Base.query = db_session.query_property()
 
-association_table = Table('association', Base.metadata, Column('user_id', Integer, ForeignKey('user.id')),
+association_table = Table('association', Base.metadata, Column('id', Integer, ForeignKey('user.id')),
                           Column('menu_id', Integer, ForeignKey('menu.id')))

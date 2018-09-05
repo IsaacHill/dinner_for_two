@@ -3,8 +3,7 @@
 import graphene
 from .user_schema import User
 from .user_model import User as UserModel
-from data.base import db_session
-from sqlalchemy import exc
+from flask_graphql_auth import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
 import datetime
 
 
@@ -19,6 +18,7 @@ class CreateUser(graphene.Mutation):
     ok = graphene.Boolean()
     error = graphene.String()
 
+    @jwt_required
     def mutate(cls, info, **args):
         name = args.pop('name')
         email = args.pop('email')
@@ -50,6 +50,7 @@ class RemoveUser(graphene.Mutation):
     ok = graphene.Boolean()
     description = graphene.String()
 
+    @jwt_required
     def mutate(self, info, **args):
         name = args.pop('name')
         email = args.pop('email')
@@ -67,33 +68,50 @@ class RemoveUser(graphene.Mutation):
 
 class UserLogin(graphene.Mutation):
     """Main user login that returns jwt if user has correctly logged in"""
-    class Arguments:
+    class Arguments(object):
         email = graphene.String()
         password = graphene.String()
 
     ok = graphene.Boolean()
-    token = graphene.String()
+    access_token = graphene.String()
+    refresh_token = graphene.String()
     error = graphene.String()
 
-    def mutate(self, info, **args):
-        email = args.pop('email')
-        password = args.pop('password')
-
-        # retrieve user from db
-        user = UserModel.query.filter_by(email=email).first()
-
+    def mutate(self, info, email, password):
         # setup variables
         error = ''
-        token = ''
         ok = False
+        access_token = ''
+        refresh_token = ''
+
+        # retrieve user from db
+        user = UserModel.find_user(email=email)
+
         if user is not None:
             if user.check_password(password):
                 ok = True
-                # TODO setup jwt here
+                access_token = create_access_token(email)
+                refresh_token = create_refresh_token(email)
             else:
                 error = 'User credentials do not match.'
         else:
             error = 'User not found.'
 
-        return UserLogin(ok=ok, token=token, error=error)
+        return UserLogin(ok=ok, error=error, access_token=access_token, refresh_token=refresh_token)
+
+
+class UserInformation(graphene.Mutation):
+    """User information response that returns general information on user"""
+    class Arguments:
+        email = graphene.String()
+        token = graphene.String()
+
+    message = graphene.String()
+
+    @jwt_required
+    def mutate(self, info, **args):
+        print(get_jwt_identity())
+        return UserInformation(message='protected')
+
+
 
