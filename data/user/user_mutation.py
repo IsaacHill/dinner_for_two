@@ -26,17 +26,18 @@ class CreateUser(graphene.Mutation):
 
         ok = False
         error = ''
-        try:
+        user = None
+        if not UserModel.find_user(email):
             # create the new user
             user = UserModel(name=name, email=email, password=password)
             user.created = datetime.datetime.now()
             user.admin = False
             user.last_login = datetime.datetime.now()
-            db_session.add(user)
-            db_session.commit()
+            user.save_to_db()
             ok = True
-        except exc.IntegrityError:
-            error = 'User with that email already exists.'
+        else:
+            error = 'A user with that email already exists.'
+
         return CreateUser(user=user, ok=ok, error=error)
 
 
@@ -57,8 +58,7 @@ class RemoveUser(graphene.Mutation):
         description = ''
         ok = False
         if user is not None:
-            db_session.delete(user)
-            db_session.commit()
+            user.remove_from_db()
             ok = True
         else:
             description = 'Unable to find user in db'

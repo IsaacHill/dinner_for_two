@@ -1,5 +1,5 @@
 """Module to store the model of the user"""
-from data.base import Base, association_table
+from data.base import Base, association_table, db_session
 from sqlalchemy import Column, Integer, String, Date, Boolean
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,8 +25,25 @@ class User(Base):
         self.email = email
         self.set_password(password)
 
+    @classmethod
+    def find_user(cls, email):
+        """Returns users with the matched email"""
+        return cls.query.filter_by(email=email).first()
+
     def set_password(self, password):
+        """Sets user password with a hash"""
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
+        """checks if the given password will match the stored password"""
         return check_password_hash(self.password, password)
+
+    def save_to_db(self):
+        """Saves the user object to the db"""
+        db_session.add(self)
+        db_session.commit()
+
+    def remove_from_db(self):
+        """Removes the user object from the db"""
+        db_session.delete(self)
+        db_session.commit()
