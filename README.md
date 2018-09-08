@@ -61,3 +61,64 @@ mutation {
   }
 }
 ```
+
+### Add Menu
+```
+mutation {
+	addMenu(name: "menu2", userID: 1, token: "sometoken") {
+		ok
+		error
+		menu {
+			name
+			created
+		}
+	}
+}
+```
+
+
+### Add Recipe
+```
+mutation {
+	addRecipe(input: {
+		name: "Beef Stew",
+		menuId: 4,
+		method: "Cook the stew then eat it",
+		time: "1 hour",
+		serves: 2,
+		equipment: "Big pot",
+		comments: "The beef is good",
+		ingredients: [{
+			name: "Beef",
+			quantity: 1.0,
+			unit: "kg"
+		}, {
+			name: "Potato",
+			quantity: 500,
+			unit: "grams"
+		}, {
+			name: "Stock",
+			quantity: 1,
+			unit: "Litre"
+		}]
+	}) {
+		ok
+		recipe {
+			id
+			name
+			createdOn
+			method
+			time
+			ingredients {
+				edges {
+					node {
+						name
+						quantity
+						unit
+					}
+				}
+			}
+		}
+	}
+}
+```
