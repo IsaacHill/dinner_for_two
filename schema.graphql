@@ -1,5 +1,23 @@
 schema {
   query: Query
+  mutation: Mutations
+}
+
+type AddMenu {
+  ok: Boolean
+  error: String
+  menu: Menu
+}
+
+type AddRecipe {
+  ok: Boolean
+  recipe: Recipe
+}
+
+type CreateUser {
+  user: User
+  ok: Boolean
+  error: String
 }
 
 scalar DateTime
@@ -22,11 +40,19 @@ type IngredientEdge {
   cursor: String!
 }
 
+input IngredientInput {
+  name: String
+  quantity: Float
+  unit: String
+}
+
 type Menu implements Node {
   id: ID!
   name: String
+  created: String
   recipes(before: String, after: String, first: Int, last: Int): RecipeConnection
   users(before: String, after: String, first: Int, last: Int): UserConnection
+  menuId: Int
 }
 
 type MenuConnection {
@@ -49,6 +75,15 @@ type MenuEdge {
   cursor: String!
 }
 
+type Mutations {
+  createUser(email: String!, name: String!, password: String!): CreateUser
+  removeUser(email: String!, name: String!): RemoveUser
+  userLogin(email: String, password: String): UserLogin
+  userInformation(email: String, token: String): UserInformation
+  addMenu(name: String!, token: String!, userID: Int!): AddMenu
+  addRecipe(input: RecipeInput!): AddRecipe
+}
+
 interface Node {
   id: ID!
 }
@@ -64,7 +99,7 @@ type Query {
   node(id: ID!): Node
   allMenus(before: String, after: String, first: Int, last: Int): MenuConnectionsConnection
   allRecipes(before: String, after: String, first: Int, last: Int): RecipeConnectionsConnection
-  allUsers(before: String, after: String, first: Int, last: Int): UserConnectionsConnection
+  allUsers(email: String, name: String, before: String, after: String, first: Int, last: Int): UserConnectionsConnection
 }
 
 type Recipe implements Node {
@@ -73,7 +108,10 @@ type Recipe implements Node {
   createdOn: DateTime
   menuId: Int
   method: String
+  time: String
   serves: Int
+  equipment: String
+  comments: String
   ingredients(before: String, after: String, first: Int, last: Int): IngredientConnection
 }
 
@@ -97,11 +135,31 @@ type RecipeEdge {
   cursor: String!
 }
 
+input RecipeInput {
+  name: String
+  menuId: Int
+  method: String
+  time: String
+  serves: Int
+  equipment: String
+  comments: String
+  ingredients: [IngredientInput]
+}
+
+type RemoveUser {
+  ok: Boolean
+  description: String
+}
+
 type User implements Node {
   id: ID!
   name: String
   email: String!
+  created: String
+  lastLogin: String
+  admin: Boolean
   menus(before: String, after: String, first: Int, last: Int): MenuConnection
+  userId: Int
 }
 
 type UserConnection {
@@ -122,4 +180,15 @@ type UserConnectionsEdge {
 type UserEdge {
   node: User
   cursor: String!
+}
+
+type UserInformation {
+  message: String
+}
+
+type UserLogin {
+  ok: Boolean
+  accessToken: String
+  refreshToken: String
+  error: String
 }
