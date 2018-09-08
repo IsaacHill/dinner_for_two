@@ -55,4 +55,4 @@ class AddRecipe(graphene.Mutation):
             recipe.ingredients.append(ingredient)
         recipe.save_to_db()
 
-        return AddRecipe(ok=True, recipe=None)
+        return AddRecipe(ok=True, recipe=recipe)
