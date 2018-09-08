@@ -13,7 +13,6 @@ auth = GraphQLAuth(app)
 # app.debug = True
 
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
-print(JWT_SECRET_KEY)
 app.config["REFRESH_EXP_LENGTH"] = 30
 app.config["ACCESS_EXP_LENGTH"] = 10
 
