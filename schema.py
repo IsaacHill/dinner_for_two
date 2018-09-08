@@ -7,9 +7,11 @@ from data.menu.menu_schema import MenuConnections
 from data.user.user_schema import UserConnections, User
 from data.user.user_mutation import CreateUser, RemoveUser, UserLogin, UserInformation
 from data.menu.menu_mutation import AddMenu
+from data.recipe.recipe_mutation import AddRecipe
 from data.recipe.recipe_schema import RecipeConnections
 # import required to know about ingredients field - don't think i like this
 from data.ingredient.ingredient_schema import IngredientConnections
+
 
 class MyConnectionField(SQLAlchemyConnectionField):
     RELAY_ARGS = ['first', 'last', 'before', 'after']
@@ -21,6 +23,7 @@ class MyConnectionField(SQLAlchemyConnectionField):
             if field not in cls.RELAY_ARGS:
                 query = query.filter(getattr(model, field) == value)
         return query
+
 
 class Query(graphene.ObjectType):
     node = relay.Node.Field()
@@ -36,6 +39,7 @@ class Mutations(graphene.ObjectType):
     user_login = UserLogin.Field()
     user_information = UserInformation.Field()
     add_menu = AddMenu.Field()
+    add_recipe = AddRecipe.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
