@@ -11,9 +11,9 @@ import datetime
 class AddMenu(graphene.Mutation):
     """Create and add a menu for a user"""
     class Arguments:
-        userID = graphene.Int()
-        name = graphene.String()
-        token = graphene.String()
+        userID = graphene.Int(required=True, description="The internal ID of the User")
+        name = graphene.String(required=True, description="Name of the menu being added")
+        token = graphene.String(required=True, description="Access token associated with this user")
 
     ok = graphene.Boolean()
     error = graphene.String()

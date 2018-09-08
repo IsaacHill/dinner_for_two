@@ -10,13 +10,13 @@ import datetime
 class CreateUser(graphene.Mutation):
     """Create a user and add to db"""
     class Arguments:
-        name = graphene.String()
-        email = graphene.String()
-        password = graphene.String()
+        name = graphene.String(required=True, description="Name of the user")
+        email = graphene.String(required=True, description="Email of the user")
+        password = graphene.String(required=True, description="User entered password")
 
-    user = graphene.Field(lambda: User)
-    ok = graphene.Boolean()
-    error = graphene.String()
+    user = graphene.Field(lambda: User, description="User created by this mutation")
+    ok = graphene.Boolean(description="If the user was successfully added")
+    error = graphene.String(description="Any errors that are returned, empty if successful")
 
     def mutate(cls, info, **args):
         name = args.pop('name')
@@ -43,8 +43,8 @@ class CreateUser(graphene.Mutation):
 class RemoveUser(graphene.Mutation):
     """Remove a user mutation based on email and username"""
     class Arguments:
-        name = graphene.String()
-        email = graphene.String()
+        name = graphene.String(required=True, description="Name of the user to remove")
+        email = graphene.String(required=True, description="Email of the user to remove")
 
     ok = graphene.Boolean()
     description = graphene.String()
