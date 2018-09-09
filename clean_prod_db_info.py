@@ -5,11 +5,9 @@ from data.menu.menu_model import Menu
 from data.user.user_model import User
 from data.base import Base, db_session, engine, association_table
 
-Ingredient.__table__.drop(engine)
-Recipe.__table__.drop(engine)
-Menu.__table__.drop(engine)
-User.__table__.drop(engine)
-association_table.drop(engine)
+for tbl in reversed(meta.sorted_tables):
+    engine.execute(tbl.delete())
+    
 db_session.commit()
 
 Base.metadata.create_all(bind=engine)
