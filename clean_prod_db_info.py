@@ -6,7 +6,7 @@ from data.menu.menu_model import Menu
 from data.user.user_model import User
 from data.base import Base, db_session, engine, association_table
 
-for tbl in reversed(meta.sorted_tables):
+for tbl in reversed(MetaData().sorted_tables):
     engine.execute(tbl.delete())
     
 db_session.commit()
