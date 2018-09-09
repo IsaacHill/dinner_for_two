@@ -9,9 +9,9 @@ class Recipe(Base):
     """Recipe model for db"""
     __tablename__ = 'recipe'
     id = Column(Integer, primary_key=True)
+    menu_id = Column(Integer, ForeignKey('menu.id'))
     name = Column(String)
     created_on = Column(DateTime, default=func.now())
-    menu_id = Column(Integer, ForeignKey('menu.id'))
     method = Column(Text)
     time = Column(Text)
     serves = Column(Integer)
@@ -19,7 +19,17 @@ class Recipe(Base):
     comments = Column(Text)
     ingredients = relationship("Ingredient")
 
+    @classmethod
+    def recipe_by_id(cls, recipe_id):
+        """Returns recipe with the matching id"""
+        return cls.query.filter_by(id=recipe_id).first()
+
     def save_to_db(self):
         """Saves the recipe to the db"""
         db_session.add(self)
+        db_session.commit()
+
+    def remove_from_db(self):
+        """Remove this recipe from the db"""
+        db_session.delete(self)
         db_session.commit()
