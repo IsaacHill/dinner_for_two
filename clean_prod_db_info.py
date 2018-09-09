@@ -1,4 +1,5 @@
 import os
+from sqlalchemy import MetaData
 from data.ingredient.ingredient_model import Ingredient
 from data.recipe.recipe_model import Recipe
 from data.menu.menu_model import Menu
