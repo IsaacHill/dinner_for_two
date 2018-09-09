@@ -68,7 +68,7 @@ class UpdateRecipe(graphene.Mutation):
     ok = graphene.Boolean(description="If the recipe was correctly updated or not")
     recipe = graphene.Field(lambda: Recipe, description="The updated recipe")
 
-    def mutation(self, info, **args):
+    def mutate(self, info, **args):
         recipe_id = args.get('recipeId')
         recipe_info = args.get('input')
         recipe = RecipeModel.recipe_by_id(recipe_id)
