@@ -56,3 +56,34 @@ class AddRecipe(graphene.Mutation):
         recipe.save_to_db()
 
         return AddRecipe(ok=True, recipe=recipe)
+
+
+class UpdateRecipe(graphene.Mutation):
+    """Mutation to update an existing recipe"""
+    class Arguments:
+        recipe_id = graphene.Int(required=True, description="Recipe ID for the recipe")
+        input = RecipeInput(description="Updated details for the recipe")
+
+
+    ok = graphene.Boolean(description="If the recipe was correctly updated or not")
+    recipe = graphene.Field(lambda: Recipe, description="The updated recipe")
+
+    def mutation(self, info, **args):
+        recipe_id = args.get('recipeId')
+        recipe_info = args.get('input')
+        recipe = RecipeModel.recipe_by_id(recipe_id)
+        # TODO update the recipe record
+
+class RemoveRecipe(graphene.Mutation):
+    """Mutation to update an existing recipe"""
+    class Arguments:
+        recipe_id = graphene.Int(required=True, description="Recipe ID for the recipe")
+
+    ok = graphene.Boolean(description="If the recipe was correctly removed or not")
+
+    def mutate(self, info, **args):
+        recipe_id = args.get('recipeId')
+        recipe = RecipeModel.recipe_by_id(recipe_id)
+        recipe.remove_from_db()
+        ok = True
+        return RemoveRecipe(ok=ok)

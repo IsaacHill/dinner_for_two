@@ -7,7 +7,7 @@ from data.menu.menu_schema import MenuConnections
 from data.user.user_schema import UserConnections, User
 from data.user.user_mutation import CreateUser, RemoveUser, UserLogin, UserInformation
 from data.menu.menu_mutation import AddMenu
-from data.recipe.recipe_mutation import AddRecipe
+from data.recipe.recipe_mutation import AddRecipe, RemoveRecipe
 from data.recipe.recipe_schema import RecipeConnections
 # import required to know about ingredients field - don't think i like this
 from data.ingredient.ingredient_schema import IngredientConnections
@@ -40,6 +40,7 @@ class Mutations(graphene.ObjectType):
     user_information = UserInformation.Field()
     add_menu = AddMenu.Field()
     add_recipe = AddRecipe.Field()
+    remove_recipe = RemoveRecipe.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
