@@ -1,6 +1,6 @@
 """Module to store the model of the user"""
 from data.base import Base, association_table, db_session
-from sqlalchemy import Column, Integer, String, Date, Boolean
+from sqlalchemy import Column, Integer, String, Date, Boolean, DateTime, func
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -12,7 +12,7 @@ class User(Base):
     name = Column(String)
     email = Column(String(50), unique=True, nullable=False)
     password = Column(String)
-    created = Column(Date)
+    created = Column(DateTime, default=func.now())
     last_login = Column(Date)
     admin = Column(Boolean)
     menus = relationship(

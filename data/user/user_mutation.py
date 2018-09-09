@@ -29,7 +29,6 @@ class CreateUser(graphene.Mutation):
         if not UserModel.find_user(email):
             # create the new user
             user = UserModel(name=name, email=email, password=password)
-            user.created = datetime.datetime.now()
             user.admin = False
             user.last_login = datetime.datetime.now()
             user.save_to_db()

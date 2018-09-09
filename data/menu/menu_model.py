@@ -1,6 +1,6 @@
 """Module for the Menu db schema"""
 from data.base import Base, association_table, db_session
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 
 
@@ -10,7 +10,7 @@ class Menu(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     recipes = relationship("Recipe")
-    created = Column(Date)
+    created = Column(DateTime, default=func.now())
     users = relationship(
         "User",
         secondary=association_table,
