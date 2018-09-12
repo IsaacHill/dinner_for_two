@@ -12,12 +12,10 @@ Base.metadata.create_all(bind=engine)
 billy = User(name="Billy Bob",
              email="test@mail.com",
              password='123',
-             admin=False
              )
 mandy = User(name="Mandy Bob",
              email="gog@mail.com",
              password='321',
-             admin=False
              )
 
 
