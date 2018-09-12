@@ -3,13 +3,13 @@
 import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyConnectionField
-from data.menu.menu_schema import MenuConnections
-from data.user.user_schema import UserConnections, User
-from data.user.user_mutation import CreateUser, RemoveUser, UserLogin, UserInformation
-from data.menu.menu_mutation import AddMenu
-from data.recipe.recipe_mutation import AddRecipe, RemoveRecipe
-from data.recipe.recipe_schema import RecipeConnections
-# import required to know about ingredients field - don't think i like this
+from .menu.menu_schema import MenuConnections
+from .user.user_schema import UserConnections, User
+from .user.user_mutation import CreateUser, RemoveUser, UserLogin, UserInformation
+from .menu.menu_mutation import AddMenu
+from .recipe.recipe_mutation import AddRecipe, RemoveRecipe
+from .recipe.recipe_schema import RecipeConnections
+#  required to know about ingredients field - don't think i like this
 from data.ingredient.ingredient_schema import IngredientConnections
 
 

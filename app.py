@@ -6,7 +6,7 @@ from flask_graphql import GraphQLView
 from flask_graphql_auth import GraphQLAuth
 
 from data.base import db_session
-from schema import schema
+from data.schema import schema
 
 app = Flask(__name__)
 auth = GraphQLAuth(app)

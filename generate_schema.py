@@ -1,6 +1,4 @@
-import json
-from schema import schema
-import sys
+from data.schema import schema
 from graphql.utils import schema_printer
 
 my_schema_str = schema_printer.print_schema(schema)
