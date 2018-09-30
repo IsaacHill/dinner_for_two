@@ -8,9 +8,11 @@ from .user.user_schema import UserConnections, User
 from .user.user_mutation import CreateUser, RemoveUser, UserLogin, UserInformation
 from .menu.menu_mutation import AddMenu
 from .recipe.recipe_mutation import AddRecipe, RemoveRecipe
-from .recipe.recipe_schema import RecipeConnections
+from .recipe.recipe_schema import RecipeConnections, Recipe
 #  required to know about ingredients field - don't think i like this
 from data.ingredient.ingredient_schema import IngredientConnections
+import sys
+
 
 
 class MyConnectionField(SQLAlchemyConnectionField):
@@ -31,6 +33,11 @@ class Query(graphene.ObjectType):
     all_menus = SQLAlchemyConnectionField(MenuConnections, sort=None)
     all_recipes = SQLAlchemyConnectionField(RecipeConnections, sort=None)
     all_users = MyConnectionField(UserConnections, email=graphene.String(), name=graphene.String(), sort=None)
+    recipe = graphene.Field(Recipe,id = graphene.Int())
+ 
+    def resolve_recipe(self, info,id):
+        query = Recipe.get_query(info)
+        return query.get(id)
 
 
 class Mutations(graphene.ObjectType):
