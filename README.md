@@ -15,7 +15,13 @@ venv/bin/activate
 
 pip install -r requirements.txt
 ```
-
+### CORS issue
+ensure your pip install is up to date. 
+then add to your .env file
+```
+#the following will allow it to accept all incomming connections, this should be changed for production.
+DOMAIN=* 
+```
 ### JWT Authentication
 In order to have jwt authentication working with the application you'll need to setup a secret key that only the server knows in order to generate the tokens. The server will attempt to pull the secret key from the environment variable JWT_SECRET_KEY. A simple random key generation with can be done as followed.
 
