@@ -41,7 +41,7 @@ pytest==3.6.2
 python-dotenv==0.9.1
 PyYAML==3.13
 records==0.5.2
-requests==2.19.1
+requests==2.20.0
 Rx==1.6.1
 singledispatch==3.4.0.3
 six==1.11.0
