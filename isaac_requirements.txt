@@ -30,7 +30,7 @@ openpyxl==2.5.4
 pep8==1.7.1
 pluggy==0.6.0
 promise==2.1
-py==1.5.3
+py==1.10.0
 pytest==3.6.2
 PyYAML==5.1
 records==0.5.2
