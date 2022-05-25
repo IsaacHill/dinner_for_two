@@ -36,7 +36,7 @@ pluggy==0.6.0
 promise==2.1
 psycopg2==2.7.5
 py==1.5.3
-PyJWT==1.6.4
+PyJWT==2.4.0
 pytest==3.6.2
 python-dotenv==0.9.1
 PyYAML==5.1
